@@ -73,6 +73,15 @@ RUN set -ex \
         /usr/share/doc \
         /usr/share/doc-base
 
+COPY amundsendatabuilder.tar.gz /tmp/.
+WORKDIR /tmp
+RUN tar -xvf amundsendatabuilder.tar.gz && \
+    pip uninstall databuilder -y && \
+    cd amundsendatabuilder && \
+    pip install -r requirements.txt && \
+    python setup.py install
+
+
 COPY script/entrypoint.sh /entrypoint.sh
 COPY config/airflow.cfg ${AIRFLOW_USER_HOME}/airflow.cfg
 
