@@ -26,7 +26,7 @@ services:
           max-size: 10m
           max-file: "3"
       volumes:
-        - ./dags:/usr/local/airflow/dags
+        - ./volumes/airflow/dags:/usr/local/airflow/dags
         # - ./plugins:/usr/local/airflow/plugins
       ports:
         - "8080:8080"
@@ -52,10 +52,10 @@ services:
           - 7474:7474
           - 7687:7687
       volumes:
-          - ./example/docker/neo4j/conf:/conf
-          - ./example/docker/neo4j/plugins:/plugins
-          - ./example/backup:/backup
-          - neo4j_data:/neo4j/data
+          - ./volumes/neo4j/conf:/conf
+          - ./volumes/neo4j/plugins:/plugins
+          - ./volumes/neo4j/backup:/backup
+          - ./volumes/neo4j/data:/neo4j/data
       networks:
         - amundsennet
 
@@ -65,7 +65,7 @@ services:
       ports:
           - 9200:9200
       volumes:
-        - es_data:/usr/share/elasticsearch/data
+        - ./volumes/elasticsearch/data:/usr/share/elasticsearch/data
       networks:
         - amundsennet
       ulimits:
@@ -121,7 +121,3 @@ services:
 
 networks:
   amundsennet:
-
-volumes:
-  es_data:
-  neo4j_data:
